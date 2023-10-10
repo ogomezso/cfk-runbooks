@@ -1,7 +1,7 @@
 # Certificates
 
 [![en](https://img.shields.io/badge/lang-en-red.svg)](https://github.com/ogomezso/cfk-runbooks/blob/main/usecases/IntAutoTLS-ExtTLS-RBAC-Ingress/0.certs/README.md)
-[![es](https://img.shields.io/badge/lang-es-yellow.svg)](https://github.com/ogomezso/cfk-runbooks/blob/main/ussescases/IntAutoTLS-ExtTLS-RBAC-Ingress/0.certs/README.es.md)
+[![es](https://img.shields.io/badge/lang-es-yellow.svg)](https://github.com/ogomezso/cfk-runbooks/blob/main/usecases/IntAutoTLS-ExtTLS-RBAC-Ingress/0.certs/README.es.md)
 
 This folders provide an opinionated way to create self-signed certificates that can be used for the exercises that require them.
 

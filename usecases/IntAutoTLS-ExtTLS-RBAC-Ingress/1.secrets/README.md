@@ -102,5 +102,4 @@ sasl.jaas.config=org.apache.kafka.common.security.plain.PlainLoginModule require
   user_kafka="kafka-secret" user_admin="admin-secret";
 ```
 
-On these configuration we are setting up the `admin` user as server user for `interbroker` communication and advertising that there are two possible users that can connect to Kafka: admin itself with password `admin-secret` and `kafka` user with password `kafka-secret` that will be the one that other components will use.
-
+On these configuration we are setting up the `admin` user as server user for `interbroker` communication and advertising that there are two possible users that can connect to Kafka: admin itself with password `admin-secret` and `kafka` user with password `kafka-secret` that will be the one that other components will use for broker to authenticate on the internal channel.
