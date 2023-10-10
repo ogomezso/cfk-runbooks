@@ -1,12 +1,13 @@
 # Deploy OpenLdap
-
+[![en](https://img.shields.io/badge/lang-en-red.svg)](https://github.com/ogomezso/cfk-runbooks/blob/main/ldap/README.md)
+[![es](https://img.shields.io/badge/lang-es-yellow.svg)](https://github.com/ogomezso/cfk-runbooks/blob/main/ldap/README.es.md)
 ## Create a namespace for this service
 
 ```bash
 kubectl create namespace ldap
 ```
 
-## Deploy Helm chart with
+## Deploy Helm chart
 
 The chart is configured using the `values.yaml` file
 

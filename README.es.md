@@ -5,19 +5,20 @@
 
 Compilacion de __runbooks__ paso a paso para distintos casos de uso de confluent for kubernetes.
 
-## Entorno 
+## Entorno
 
-En esta seccion encontraras guias sobre como instalar un cluster kubernetes en diferentes distribuciones:
+En esta sección encontrarás guias sobre como instalar un cluster kubernetes en diferentes distribuciones:
 
-- GKE
-- AKS
-- EKS
-- K3
-- Kind
+- **GKE**: [Terraform provider](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/container_cluster)  para el servicio manejado de Google Cloud
+- **AKS**: [Terraform provider](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/kubernetes_cluster) para el servicio manejado en Azure
+- **EKS**: [Terraform provider](https://registry.terraform.io/modules/terraform-aws-modules/eks/aws/latest) para el servicio manejado en AWS
+- **K3**: [Quickstart](https://docs.k3s.io/quick-start) de la distribución local de K8s K3
+- **Kind**: [Guía de instalación](https://kind.sigs.k8s.io/) de la distribución local basada en contenedores docker.
 
 ## LDAP
 
 Open LDAP de ejemplo alimentado con una arbol de usuarios y grupos que permitan la implementación de casos de uso basados en autorización RBAC
+[Readme](https://github.com/ogomezso/cfk-runbooks/blob/main/ldap/README.es.md)
 
 ## Ingress
 

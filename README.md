@@ -18,7 +18,7 @@ Under this folder you will find a way to pop up a kubernetes cluster on the foll
 
 On this folder you got a Open LDAP feeded with a convenient user a group structure for your RBAC use cases.
 
-[Readme]()
+[Readme](https://github.com/ogomezso/cfk-runbooks/blob/main/ldap/README.md)
 
 ## Ingress
 
