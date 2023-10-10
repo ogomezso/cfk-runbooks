@@ -1,0 +1,255 @@
+name: ldap
+image: osixia/openldap:1.5.0
+tls:
+  enabled: false
+  fullchain: |-
+  privkey: |-
+  cacerts: |-
+
+env:
+  LDAP_ORGANISATION: "Confluent Acme Inc."
+  LDAP_DOMAIN: "confluent.acme.com"
+  LDAP_ADMIN_PASSWORD: "confluentrox"
+  LDAP_CONFIG_PASSWORD: "confluentconfigrox"
+  LDAP_READONLY_USER: "true"
+  LDAP_READONLY_USER_USERNAME: "mds"
+  LDAP_READONLY_USER_PASSWORD: "Developer!"
+  LDAP_BASE_DN: "dc=confluent,dc=acme,dc=com"
+
+# Adding integer before ldif name to allow sequence order.
+ldifs:
+  0_index.ldif: |-
+    dn: olcDatabase={1}mdb,cn=config
+    changetype: modify
+    add: olcDbIndex
+    olcDbIndex: cn eq
+### Users and Groups ous
+  00_user-group-ous.ldif: |-
+    dn: ou=users,{{ LDAP_BASE_DN }}
+    objectClass: organizationalUnit
+    ou: users
+
+    dn: ou=groups,{{ LDAP_BASE_DN }}
+    objectClass: organizationalUnit
+    ou: groups
+
+### Internal Users and Groups
+
+  01_internal_users_group.ldif: |-
+    dn: cn=confluentusers,ou=groups,{{ LDAP_BASE_DN }}
+    objectClass: top
+    objectClass: posixGroup
+    cn: confluentusers
+    gidNumber: 5000
+
+  02_kafka.ldif: |-
+    dn: cn=kafka,ou=users,{{ LDAP_BASE_DN }}
+    userPassword: kafka-secret
+    description: kafka user
+    objectClass: simpleSecurityObject
+    objectClass: organizationalRole
+    cn: kafka
+  03_erp.ldif: |-
+    dn: cn=erp,ou=users,{{ LDAP_BASE_DN }}
+    userPassword: erp-secret
+    description: erp user
+    objectClass: simpleSecurityObject
+    objectClass: organizationalRole
+    cn: erp
+  04_sr.ldif: |-
+    dn: cn=sr,ou=users,{{ LDAP_BASE_DN }}
+    userPassword: sr-secret
+    description: schema registry user
+    objectClass: simpleSecurityObject
+    objectClass: organizationalRole
+    cn: sr
+  05_c3.ldif: |-
+    dn: cn=c3,ou=users,{{ LDAP_BASE_DN }}
+    userPassword: c3-secret
+    description: control center user
+    objectClass: simpleSecurityObject
+    objectClass: organizationalRole
+    cn: c3
+  06_ksql.ldif: |-
+    dn: cn=ksql,ou=users,{{ LDAP_BASE_DN }}
+    userPassword: ksql-secret
+    description: ksql user
+    objectClass: simpleSecurityObject
+    objectClass: organizationalRole
+    cn: ksql
+  07_connect.ldif: |-
+    dn: cn=connect,ou=users,{{ LDAP_BASE_DN }}
+    userPassword: connect-secret
+    description: connect user
+    objectClass: simpleSecurityObject
+    objectClass: organizationalRole
+    cn: connect
+  08_replicator.ldif: |-
+    dn: cn=replicator,ou=users,{{ LDAP_BASE_DN }}
+    userPassword: replicator-secret
+    description: replicator user
+    objectClass: simpleSecurityObject
+    objectClass: organizationalRole
+    cn: replicator
+  09_krp.ldif: |-
+    dn: cn=krp,ou=users,{{ LDAP_BASE_DN }}
+    userPassword: krp-secret
+    description: krp user
+    objectClass: simpleSecurityObject
+    objectClass: organizationalRole
+    cn: krp
+  10_confluent_users_add_group.ldif: |-
+    dn: cn=confluentusers,ou=groups,{{ LDAP_BASE_DN }}
+    changetype: modify
+    add: memberuid
+    memberuid: cn=kafka,ou=users,{{ LDAP_BASE_DN }}
+
+    dn: cn=confluentusers,ou=groups,{{ LDAP_BASE_DN }}
+    changetype: modify
+    add: memberuid
+    memberuid: cn=erp,ou=users,{{ LDAP_BASE_DN }}
+
+    dn: cn=confluentusers,ou=groups,{{ LDAP_BASE_DN }}
+    changetype: modify
+    add: memberuid
+    memberuid: cn=sr,ou=users,{{ LDAP_BASE_DN }}
+
+    dn: cn=confluentusers,ou=groups,{{ LDAP_BASE_DN }}
+    changetype: modify
+    add: memberuid
+    memberuid: cn=c3,ou=users,{{ LDAP_BASE_DN }}
+
+    dn: cn=confluentusers,ou=groups,{{ LDAP_BASE_DN }}
+    changetype: modify
+    add: memberuid
+    memberuid: cn=ksql,ou=users,{{ LDAP_BASE_DN }}
+    
+    dn: cn=confluentusers,ou=groups,{{ LDAP_BASE_DN }}
+    changetype: modify
+    add: memberuid
+    memberuid: cn=connect,ou=users,{{ LDAP_BASE_DN }}
+
+    dn: cn=confluentusers,ou=groups,{{ LDAP_BASE_DN }}
+    changetype: modify
+    add: memberuid
+    memberuid: cn=replicator,ou=users,{{ LDAP_BASE_DN }}
+
+    dn: cn=confluentusers,ou=groups,{{ LDAP_BASE_DN }}
+    changetype: modify
+    add: memberuid
+    memberuid: cn=krp,ou=users,{{ LDAP_BASE_DN }}
+
+#### DOMAIN PROGRAMMATICAL USERS
+
+  11_domain1_users_group.ldif: |-
+    dn: cn=domain1,ou=groups,{{ LDAP_BASE_DN }}
+    objectClass: top
+    objectClass: posixGroup
+    cn: domain1
+    gidNumber: 5000
+
+  12_domain1_users.ldif: |-
+    dn: cn=domain1-dev,ou=users,{{ LDAP_BASE_DN }}
+    userPassword: domain1-dev-secret
+    description: Domain 1 write a read user
+    objectClass: simpleSecurityObject
+    objectClass: organizationalRole
+    cn: domain1-dev
+
+    dn: cn=domain1-reader,ou=users,{{ LDAP_BASE_DN }}
+    userPassword: domain1-read-secret
+    description: Domain 1 reader (for other domain topics)
+    objectClass: simpleSecurityObject
+    objectClass: organizationalRole
+    cn: domain1-reader
+
+    dn: cn=domain1-owner,ou=users,{{ LDAP_BASE_DN }}
+    userPassword: domain1-owner-secret
+    description: Domain 1 resource owner
+    objectClass: simpleSecurityObject
+    objectClass: organizationalRole
+    cn: domain1-owner
+
+  13_domain1_users_add_group.ldif: |-
+    dn: cn=domain1,ou=groups,{{ LDAP_BASE_DN }}
+    changetype: modify
+    add: memberuid
+    memberuid: cn=domain1-dev,ou=users,{{ LDAP_BASE_DN }}
+
+    dn: cn=domain1,ou=groups,{{ LDAP_BASE_DN }}
+    changetype: modify
+    add: memberuid
+    memberuid: cn=domain1-reader,ou=users,{{ LDAP_BASE_DN }}
+
+    dn: cn=domain1,ou=groups,{{ LDAP_BASE_DN }}
+    changetype: modify
+    add: memberuid
+    memberuid: cn=domain1-owner,ou=users,{{ LDAP_BASE_DN }}
+
+  14_domain2_users_group.ldif: |-
+    dn: cn=domain2,ou=groups,{{ LDAP_BASE_DN }}
+    objectClass: top
+    objectClass: posixGroup
+    cn: domain2
+    gidNumber: 5000
+
+  15_domain2_users.ldif: |-
+    dn: cn=domain2-dev,ou=users,{{ LDAP_BASE_DN }}
+    userPassword: domain2-dev-secret
+    description: Domain 2 write a read user
+    objectClass: simpleSecurityObject
+    objectClass: organizationalRole
+    cn: domain2-dev
+
+    dn: cn=domain2-reader,ou=users,{{ LDAP_BASE_DN }}
+    userPassword: domain2-read-secret
+    description: Domain 2 reader (for other domain topics)
+    objectClass: simpleSecurityObject
+    objectClass: organizationalRole
+    cn: domain2-reader
+
+    dn: cn=domain2-owner,ou=users,{{ LDAP_BASE_DN }}
+    userPassword: domain2-owner-secret
+    description: Domain 2 resource owner
+    objectClass: simpleSecurityObject
+    objectClass: organizationalRole
+    cn: domain2-owner
+
+  16_domain2_users_add_group.ldif: |-
+    dn: cn=domain2,ou=groups,{{ LDAP_BASE_DN }}
+    changetype: modify
+    add: memberuid
+    memberuid: cn=domain2-dev,ou=users,{{ LDAP_BASE_DN }}
+
+    dn: cn=domain2,ou=groups,{{ LDAP_BASE_DN }}
+    changetype: modify
+    add: memberuid
+    memberuid: cn=domain2-reader,ou=users,{{ LDAP_BASE_DN }}
+
+    dn: cn=domain2,ou=groups,{{ LDAP_BASE_DN }}
+    changetype: modify
+    add: memberuid
+    memberuid: cn=domain2-owner,ou=users,{{ LDAP_BASE_DN }}
+
+#### SUPER ADMIN  USERS
+
+  17_superAdmin_users_group.ldif: |-
+    dn: cn=superadmin,ou=groups,{{ LDAP_BASE_DN }}
+    objectClass: top
+    objectClass: posixGroup
+    cn: superadmin
+    gidNumber: 5000
+
+  18_superadmin_users.ldif: |-
+    dn: cn=superadmin,ou=users,{{ LDAP_BASE_DN }}
+    userPassword: super-secret
+    description: This user administrate all cluster and security
+    objectClass: simpleSecurityObject
+    objectClass: organizationalRole
+    cn: superadmin
+
+  19_superadmin_users_add_group.ldif: |-
+    dn: cn=superadmin,ou=groups,{{ LDAP_BASE_DN }}
+    changetype: modify
+    add: memberuid
+    memberuid: cn=superadmin,ou=users,{{ LDAP_BASE_DN }}
