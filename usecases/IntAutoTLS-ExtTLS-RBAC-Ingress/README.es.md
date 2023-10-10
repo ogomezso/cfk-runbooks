@@ -22,7 +22,7 @@ Más información en la sección [Certs](https://github.com/ogomezso/cfk-runbook
 
 Preparación de los secretos que necesitaremos para **toda** la instalación
 
-Más información en la sección  [Secrets](https://github.com/ogomezso/cfk-runbooks/blob/main/usecases/IntAutoTLS-ExtTLS-RBAC-Ingress/secrets/README.md).
+Más información en la sección  [Secrets](https://github.com/ogomezso/cfk-runbooks/blob/main/usecases/IntAutoTLS-ExtTLS-RBAC-Ingress/secrets/README.es.md).
 
 ## Ingress
 
