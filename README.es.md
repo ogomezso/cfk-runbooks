@@ -22,11 +22,7 @@ Open LDAP de ejemplo alimentado con una arbol de usuarios y grupos que permitan 
 
 ## Ingress
 
-Setup de las soluciones mas populares de Ingress Controller:
-
-- NGINX
-- Envoy
-- Contour
+En la sección [Ingress Controller](https://github.com/ogomezso/cfk-runbooks/blob/main/ingress/README.es.md) encontrarás como hacer el setup de las soluciones para Kubernetes Ingress mas populares.
 
 ## Utils
 
