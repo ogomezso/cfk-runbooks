@@ -17,7 +17,7 @@ Install the chart:
 ```bash
 helm upgrade  --install ingress-nginx ingress-nginx/ingress-nginx \
   --set controller.extraArgs.enable-ssl-passthrough="true" \
-  --namespace confluent
+  --namespace ingress-nginx
 ```
 
 > NOTES:

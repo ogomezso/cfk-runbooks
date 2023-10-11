@@ -162,15 +162,17 @@ Example `external-services-cert-req.json`
 ### Generate the EXTERNAL Certificate and Key for Kafka and Services
 
 ```bash
-$ cfssl gencert -ca=generated/ExternalCAcert.pem \
+cfssl gencert -ca=generated/ExternalCAcert.pem \
     -ca-key=generated/ExternalCAkey.pem \
-    -config=cert-req-conf.json \
-    -profile=server external-kafka-cert-req.json \
+    -config=generated/cert-req-conf.json \
+    -profile=server generated/external-kafka-cert-req.json \
     | cfssljson -bare generated/externalKafka
+```
 
-$ cfssl gencert -ca=generated/ExternalCAcert.pem \
+```bash
+cfssl gencert -ca=generated/ExternalCAcert.pem \
     -ca-key=generated/ExternalCAkey.pem \
-    -config=cert-req-conf.json \
-    -profile=server external-services-cert-req.json \
+    -config=generated/cert-req-conf.json \
+    -profile=server generated/external-services-cert-req.json \
     | cfssljson -bare generated/externalServices
 ```
