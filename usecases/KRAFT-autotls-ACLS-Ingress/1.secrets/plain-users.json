@@ -1,0 +1,8 @@
+{
+    "dev": "dev-secret",
+    "reader": "reader-secret",
+    "admin": "admin-secret",
+    "kraft": "kraft-secret",
+    "kafka": "kafka-secret",
+    "c3": "c3-secret"
+  }

@@ -1,0 +1,60 @@
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: cp-ingress-services
+  namespace: confluent
+  annotations:
+    nginx.ingress.kubernetes.io/ssl-redirect: "true"
+    nginx.ingress.kubernetes.io/backend-protocol: HTTPS
+spec:
+  ingressClassName: nginx
+  tls:
+    - hosts:
+        - schemaregistry.35.246.125.225.nip.io
+        - connect.35.246.125.225.nip.io
+        - ksqldb.35.246.125.225.nip.io
+        - controlcenter.35.246.125.225.nip.io
+        - mds.35.246.125.225.nip.io
+      secretName: services-external-tls
+  rules:
+    - host: schemaregistry.35.246.125.225.nip.io
+      http:
+        paths:
+          - pathType: Prefix
+            path: /
+            backend:
+              service:
+                name: schemaregistry
+                port:
+                  number: 8081
+    - host: connect.35.246.125.225.nip.io
+      http:
+        paths:
+          - pathType: Prefix
+            path: /
+            backend:
+              service:
+                name: connect
+                port:
+                  number: 8083
+    - host: ksqldb.35.246.125.225.nip.io
+      http:
+        paths:
+          - pathType: Prefix
+            path: /
+            backend:
+              service:
+                name: ksqldb
+                port:
+                  number: 8088
+    - host: controlcenter.35.246.125.225.nip.io
+      http:
+        paths:
+          - pathType: Prefix
+            path: /
+            backend:
+              service:
+                name: controlcenter
+                port:
+                  number: 9021

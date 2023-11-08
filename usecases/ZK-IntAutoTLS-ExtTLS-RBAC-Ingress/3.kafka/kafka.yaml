@@ -3,14 +3,14 @@ apiVersion: platform.confluent.io/v1beta1
 kind: Kafka
 metadata:
   name: kafka
-  namespace: confluent
+  namespace: kraft
   labels:
     component: kafka
 spec:
   configOverrides:
     log4j:
-    # - log4j.logger.kafka.authorizer.logger=DEBUG, authorizerAppender
-    - log4j.logger.io.confluent.security.auth=TRACE,metadataServiceAppender
+      # - log4j.logger.kafka.authorizer.logger=DEBUG, authorizerAppender
+      - log4j.logger.io.confluent.security.auth=TRACE,metadataServiceAppender
   replicas: 3
   image:
     application: confluentinc/cp-server:7.5.0
@@ -21,8 +21,8 @@ spec:
   authorization:
     type: rbac
     superUsers:
-    - User:admin
-    - User:kafka
+      - User:admin
+      - User:kafka
   listeners:
     replication:
       authentication:
@@ -47,7 +47,7 @@ spec:
       externalAccess:
         type: staticForHostBasedRouting
         staticForHostBasedRouting:
-          domain: 35.242.166.238.nip.io
+          domain: 35.246.125.225.nip.io
           brokerPrefix: broker
           port: 443
   metricReporter:
@@ -91,7 +91,7 @@ spec:
           # tls:
   dependencies:
     zookeeper:
-      endpoint: zookeeper.confluent.svc.cluster.local:2182
+      endpoint: zookeeper.kraft.svc.cluster.local:2182
       tls:
         enabled: true
       authentication:
