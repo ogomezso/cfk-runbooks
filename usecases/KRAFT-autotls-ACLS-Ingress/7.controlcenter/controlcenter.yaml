@@ -35,6 +35,7 @@ spec:
           enabled: true
     ksqldb:
       - name: ksqldb
+        advertisedUrl: https://ksqldb.35.246.125.225.nip.io:443
         url:  https://ksqldb.confluent.svc.cluster.local:8088
         tls:
           enabled: true

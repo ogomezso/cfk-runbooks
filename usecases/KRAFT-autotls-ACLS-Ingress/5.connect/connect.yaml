@@ -25,3 +25,12 @@ spec:
       url: https://schemaregistry.confluent.svc.cluster.local:8081
       tls:
         enabled: true
+  build:
+    type: onDemand
+    onDemand:
+      plugins:
+        locationType: confluentHub
+        confluentHub:
+          - name: kafka-connect-datagen
+            owner: confluentinc
+            version: 0.6.3

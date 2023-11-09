@@ -15,7 +15,6 @@ spec:
         - connect.35.246.125.225.nip.io
         - ksqldb.35.246.125.225.nip.io
         - controlcenter.35.246.125.225.nip.io
-        - mds.35.246.125.225.nip.io
       secretName: services-external-tls
   rules:
     - host: schemaregistry.35.246.125.225.nip.io
